@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adventure Tour in Paradise</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Adventure Tour in Paradise | Elite Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #0a0a0a;      
@@ -16,61 +16,164 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--primary); color: var(--white); font-family: 'Montserrat', sans-serif; line-height: 1.6; overflow-x: hidden; }
+        body { 
+            background-color: var(--primary); 
+            color: var(--white); 
+            font-family: 'Montserrat', sans-serif; 
+            line-height: 1.6; 
+            overflow-x: hidden;
+            cursor: default;
+        }
 
-        /* Nota: Si subes 'YATE.jpg' a tu GitHub, esta sección mostrará esa foto de fondo automáticamente */
-        header { height: 45vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(10, 10, 10, 0.82), rgba(10, 10, 10, 0.95)), url('https://raw.githubusercontent.com/beamazingcolors/Adventure-Tour-in-Paradise/main/YATE.jpg') center/cover; padding: 20px; }
-        h1 { font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 5vw, 3rem); letter-spacing: 6px; text-transform: uppercase; font-weight: 400; color: var(--white); }
-        .header-subtitle { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 8px; color: var(--accent); text-transform: uppercase; margin-top: 15px; font-weight: 600; }
+        /* --- SISTEMA DE PARTÍCULAS GLOBAL --- */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none; /* Permite hacer clic a través de las partículas */
+        }
 
-        .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(10, 10, 10, 0.98); padding: 25px 0; border-bottom: 1px solid rgba(197, 155, 39, 0.15); display: flex; justify-content: center; gap: 50px; }
-        .nav-btn { font-family: 'Cinzel', serif; background: none; border: none; color: var(--white); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 4px; cursor: pointer; opacity: 0.4; transition: 0.4s; padding: 10px 0; }
+        /* --- LANDING PAGE (HERO) --- */
+        #landing {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: #050505;
+        }
+
+        /* Efecto de Humo Animado */
+        .smoke-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(40, 40, 40, 0.2), transparent 50%),
+                radial-gradient(circle at 20% 30%, rgba(30, 30, 30, 0.1), transparent 40%);
+            filter: blur(60px);
+            animation: smokeMove 20s infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes smokeMove {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(5%, 5%); }
+        }
+
+        .landing-content {
+            z-index: 2;
+            padding: 20px;
+            max-width: 900px;
+        }
+
+        .landing-content h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: var(--white);
+            text-shadow: 0 0 30px rgba(197, 155, 39, 0.3);
+        }
+
+        .landing-content p {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            letter-spacing: 6px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .scroll-btn {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 15px 40px;
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: 0.5s;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .scroll-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+            box-shadow: 0 0 20px rgba(197, 155, 39, 0.4);
+        }
+
+        /* --- CATALOGO SECTION --- */
+        .nav-bar { 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            background: rgba(10, 10, 10, 0.95); 
+            padding: 25px 0; 
+            border-bottom: 1px solid rgba(197, 155, 39, 0.1); 
+            display: flex; 
+            justify-content: center; 
+            gap: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn { font-family: 'Cinzel', serif; background: none; border: none; color: var(--white); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; cursor: pointer; opacity: 0.4; transition: 0.4s; }
         .nav-btn.active { opacity: 1; color: var(--accent); border-bottom: 1px solid var(--accent); }
 
-        #catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; padding: 60px 8%; max-width: 1600px; margin: 0 auto; }
-        .card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 0px; overflow: hidden; transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; transform: translateY(30px); cursor: pointer; }
+        #catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; padding: 80px 8%; max-width: 1600px; margin: 0 auto; }
+        
+        .card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.02); overflow: hidden; transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translateY(40px); cursor: pointer; }
         .card.visible { opacity: 1; transform: translateY(0); }
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.7); }
+        .card:hover { border-color: var(--accent); transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
         
-        .card img { width: 100%; height: 320px; object-fit: cover; background: #1a1a1a; display: block; filter: grayscale(15%) brightness(95%); transition: 0.5s; }
-        .card:hover .card img { filter: grayscale(0%) brightness(100%); }
+        .card img { width: 100%; height: 350px; object-fit: cover; background: #000; display: block; filter: grayscale(30%) brightness(80%); transition: 0.8s; }
+        .card:hover img { filter: grayscale(0%) brightness(100%); transform: scale(1.05); }
 
-        .card-info { padding: 30px 25px; background: linear-gradient(180deg, rgba(18,18,18,0) 0%, rgba(10,10,10,1) 100%); }
-        .card-title { font-family: 'Cinzel', serif; font-size: 1.35rem; margin: 8px 0; letter-spacing: 1px; font-weight: 400; }
-        .card-price { color: var(--accent); font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.05rem; letter-spacing: 1px; }
+        .card-info { padding: 35px 25px; background: #0a0a0a; text-align: center; }
+        .card-title { font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 10px; letter-spacing: 2px; font-weight: 400; }
+        .card-price { color: var(--accent); font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.9rem; letter-spacing: 2px; }
 
-        /* MODAL / Vista Detallada */
-        #modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 5, 0.98); backdrop-filter: blur(20px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: var(--primary); border: 1px solid rgba(197, 155, 39, 0.3); width: 100%; max-width: 1050px; max-height: 90vh; overflow-y: auto; border-radius: 0px; position: relative; }
-        .modal-close { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; color: rgba(255,255,255,0.6); cursor: pointer; z-index: 10; transition: 0.3s; }
-        .modal-close:hover { color: var(--accent); }
-        .modal-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; }
-        
-        .modal-gallery { display: flex; flex-direction: column; background: #111; justify-content: center; min-height: 100%; }
-        .modal-gallery img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
-        
-        .modal-details { padding: 50px; background: #0d0d0d; }
-        .modal-title { font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--white); margin-bottom: 15px; font-weight: 400; letter-spacing: 1px; }
-        .modal-label { font-family: 'Cinzel', serif; color: var(--accent); text-transform: uppercase; font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; margin-top: 30px; display: block; }
-        .modal-text { font-size: 0.9rem; color: #b3b3b3; font-weight: 300; margin-top: 5px; }
+        /* MODAL */
+        #modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-content { background: var(--primary); border: 1px solid rgba(197, 155, 39, 0.2); width: 100%; max-width: 1100px; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; color: #fff; cursor: pointer; z-index: 10; opacity: 0.5; }
+        .modal-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; }
+        .modal-gallery img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .modal-details { padding: 60px; background: #0d0d0d; }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 20px; font-weight: 400; }
         .btn-wa { display: block; text-align: center; background: var(--gradient); color: var(--primary); text-decoration: none; padding: 20px; font-family: 'Cinzel', serif; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-top: 40px; transition: 0.4s; }
-        .btn-wa:hover { filter: brightness(1.1); box-shadow: 0 10px 20px rgba(197, 155, 39, 0.2); }
 
-        /* INTERFAZ LIGHTBOX FULLSCREEN */
-        #lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.98); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 3000; cursor: zoom-out; animation: fadeIn 0.2s ease-out; }
-        #lightbox-overlay img { max-width: 95%; max-height: 95vh; object-fit: contain; border: 1px solid rgba(197, 155, 39, 0.2); box-shadow: 0 0 60px rgba(0,0,0,1); }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @media (max-width: 900px) { .modal-grid { grid-template-columns: 1fr; } .modal-details { padding: 35px; } .card img { height: 260px; } }
+        #lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.98); display: none; justify-content: center; align-items: center; z-index: 3000; }
+        #lightbox-overlay img { max-width: 90%; max-height: 90vh; }
+
+        @media (max-width: 900px) { .modal-grid { grid-template-columns: 1fr; } .modal-details { padding: 30px; } }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Adventure Tour in Paradise</h1>
-        <p class="header-subtitle">El mar te espera</p>
-    </header>
+    <canvas id="particle-canvas"></canvas>
 
+    <section id="landing">
+        <div class="smoke-bg"></div>
+        <div class="landing-content">
+            <p>Bienvenido a la Élite</p>
+            <h1>Adventure Tour in Paradise</h1>
+            <p style="color: #fff; opacity: 0.6; font-family: 'Montserrat'; letter-spacing: 2px;">El mar te espera</p>
+            <a href="#catalog-start" class="scroll-btn">Explorar Colección</a>
+        </div>
+    </section>
+
+    <div id="catalog-start"></div>
     <nav class="nav-bar">
         <button id="btnTour" class="nav-btn active" onclick="filter('tour')">Experiencias</button>
         <button id="btnYate" class="nav-btn" onclick="filter('yate')">Nuestra Flota</button>
@@ -86,29 +189,76 @@
     </div>
 
     <div id="lightbox-overlay" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Vista Completa">
+        <img id="lightbox-img" src="" alt="Full View">
     </div>
 
     <script>
+        /* --- LÓGICA DE PARTÍCULAS --- */
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.color = 'rgba(255, 255, 255, 0.8)';
+                this.life = 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= 0.02;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.life;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 3; i++) {
+                particles.push(new Particle(e.clientX, e.clientY));
+            }
+        });
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        /* --- LÓGICA DE DATOS (CATÁLOGO) --- */
         const TSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSEqBgn1LIks5848oxtrZOA4RDT59gnXyE6DGYf4sgAw9hYBLmm7RvpPaqGJQGQbvbXxcdMCCax-1Te/pub?output=tsv';
         const GITHUB_RAW = 'https://raw.githubusercontent.com/beamazingcolors/Adventure-Tour-in-Paradise/main/';
 
         let fullData = [];
 
-        // FUNCIÓN OPTIMIZADA: Inteligente con mayúsculas y nombres de columna
         function getImgUrlByCodigo(item) {
-            let codigoValue = item['Codigo'] || item['Código'] || item['codigo'] || item['Code'] || item['CODE'] || '';
-            
-            if (!codigoValue || codigoValue === 'Experiencias' || codigoValue.trim() === '') return '';
-            
-            let fileName = codigoValue.trim();
-            
-            // Eliminamos la extensión si la escribiste en el Excel para no duplicarla
-            fileName = fileName.replace(/\.(jpg|jpeg|png)$/i, '');
-            
-            // Forzamos MAYÚSCULAS para que coincida exactamente con los archivos de GitHub (AMP, ANG, etc.)
-            fileName = fileName.toUpperCase() + '.jpg';
-            
+            let codigoValue = item['Codigo'] || item['Código'] || item['Code'] || '';
+            if (!codigoValue || codigoValue === 'Experiencias') return '';
+            let fileName = codigoValue.trim().toUpperCase().replace(/\.(jpg|jpeg|png)$/i, '') + '.jpg';
             return GITHUB_RAW + encodeURIComponent(fileName);
         }
 
@@ -118,12 +268,11 @@
                 const text = await response.text();
                 const rows = text.replace(/\r/g, '').split('\n').filter(r => r.trim() !== '').map(r => r.split('\t'));
                 const headers = rows[0].map(h => h.trim());
-                
                 fullData = rows.slice(1).map(row => {
                     let item = {};
                     headers.forEach((h, i) => {
                         let val = row[i]?.trim();
-                        item[h] = (!val || val.toLowerCase() === 'undefined' || val.toLowerCase() === 'null') ? 'Experiencias' : val;
+                        item[h] = (!val || val.toLowerCase() === 'undefined') ? 'Experiencias' : val;
                     });
                     return item;
                 });
@@ -135,25 +284,18 @@
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.innerText.toLowerCase().includes(category === 'tour' ? 'exp' : 'flota')));
             const grid = document.getElementById('catalog-grid');
             grid.innerHTML = '';
-            
             const filtered = fullData.filter(i => (i['TIPO'] || '').toLowerCase().includes(category));
-
             filtered.forEach((item, idx) => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.onclick = () => openModal(item.Nombre);
-                
                 const img = getImgUrlByCodigo(item);
-                const tag = item['Pies'] !== 'Experiencias' ? item['Pies'] + ' Pies' : 'Selección Premium';
-                let precio = item['Precio'] || 'Experiencias';
-                if (precio.toLowerCase() === 'undefined' || precio.trim() === '') precio = 'Experiencias';
-
                 card.innerHTML = `
-                    <img src="${img}" onerror="this.style.opacity='0';">
+                    <img src="${img}" onerror="this.parentElement.style.display='none';">
                     <div class="card-info">
-                        <span style="color:var(--accent); font-family:'Cinzel', serif; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase;">${tag}</span>
+                        <span style="color:var(--accent); font-family:'Cinzel'; font-size:0.7rem; letter-spacing:2px;">SELECCIÓN PREMIUM</span>
                         <h2 class="card-title">${item.Nombre}</h2>
-                        <p class="card-price">${precio}</p>
+                        <p class="card-price">${item.Precio || 'Experiencias'}</p>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -164,33 +306,15 @@
         function openModal(nombre) {
             const item = fullData.find(i => i.Nombre === nombre);
             const body = document.getElementById('modal-body');
-            
-            let precio = item.Precio;
-            if (!precio || precio.toLowerCase() === 'undefined' || precio.trim() === '') precio = 'Experiencias';
-            let desc = item['Descriptivo'] !== 'Experiencias' ? item['Descriptivo'] : (item['Detalles'] !== 'Experiencias' ? item['Detalles'] : 'Experiencias');
-            
             const img = getImgUrlByCodigo(item);
-
             body.innerHTML = `
-                <div class="modal-gallery">
-                    <img src="${img}" onclick="openLightbox('${img}')" title="Click para expandir" onerror="this.style.opacity='0';">
-                </div>
+                <div class="modal-gallery"><img src="${img}" onclick="openLightbox('${img}')"></div>
                 <div class="modal-details">
-                    <span class="modal-label">Propuesta Exclusiva</span>
+                    <span class="modal-label">Exclusive Service</span>
                     <h1 class="modal-title">${item.Nombre}</h1>
-                    <p class="card-price" style="font-size:1.6rem;">${precio}</p>
-                    
-                    <span class="modal-label">Sobre la Experiencia</span>
-                    <p class="modal-text" style="line-height: 1.8;">${desc}</p>
-                    
-                    ${item['Capacidad de personas'] !== 'Experiencias' ? `<span class="modal-label">Capacidad</span><p class="modal-text">${item['Capacidad de personas']}</p>` : ''}
-                    
-                    <span class="modal-label">Incluye</span>
-                    <div style="background:rgba(197,155,39,0.05); border-left:2px solid var(--accent); padding:20px; font-size:0.85rem; margin-top:12px; color:#cccccc; font-weight:300; line-height:1.7;">
-                        ${item['Incluye:'] !== 'Experiencias' ? item['Incluye:'] : 'Servicio Premium de Concierge incluido.'}
-                    </div>
-                    
-                    <a href="https://wa.me/message/CAXOJF3WZUTMG1" target="_blank" class="btn-wa">Reservar ahora</a>
+                    <p class="card-price" style="font-size:1.5rem; margin-bottom:20px;">${item.Precio || 'Experiencias'}</p>
+                    <p style="color:#888; font-weight:300; font-size:0.9rem;">${item['Descriptivo'] || item['Detalles']}</p>
+                    <a href="https://wa.me/message/CAXOJF3WZUTMG1" target="_blank" class="btn-wa">Reservar Ahora</a>
                 </div>
             `;
             document.getElementById('modal-overlay').style.display = 'flex';
@@ -203,10 +327,9 @@
         }
 
         function openLightbox(src) {
-            const overlay = document.getElementById('lightbox-overlay');
             const img = document.getElementById('lightbox-img');
             img.src = src;
-            overlay.style.display = 'flex';
+            document.getElementById('lightbox-overlay').style.display = 'flex';
         }
 
         function closeLightbox() {
